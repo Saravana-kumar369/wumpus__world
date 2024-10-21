@@ -13,9 +13,11 @@ wumpus=[["Save","Breeze","PIT","Breeze"],
         ["Smell","Save","Breeze","PIT"]]
 //Initial Variables:TYPE THE CODE HERE BY REFERRING BELOW STATEMENTS
 //[row and column store the player's current position (starting at the top-left corner).
-//arrow = True means the player has an arrow available to kill the Wumpus.
-//player = True controls the game loop.
-//score = 0 starts the player's score at zero.]
+# Initial Variables
+row, column = 0, 0 
+arrow = True 
+player = True 
+score = 0
 while(player):
     choice=input("press u to move up\npress d to move down\npress l to move left\npress r to move right\n")
     if choice == "u":
@@ -49,11 +51,11 @@ while(player):
     else:
         print("move denied")
 
-    if wumpus[row][column]=="Smell" and arrow != False:
+    if wumpus[row][column]=="Smell" and arrow:
         arrow_choice=input("do you want to throw an arrow-->\npress y to throw\npress n to save your arrow\n")
         if arrow_choice == "y":
             arrow_throw=input("press u to throw up\npress d to throw down\npress l to throw left\npress r to throw right\n")
-            if arrow_throw == "u":
+            if arrow_throw == "u" and row>0:
                 if wumpus[row-1][column] == "WUMPUS":
                     print("wumpus killed!")
                     score+=1000
@@ -65,7 +67,7 @@ while(player):
                     print("arrow wasted...")
                     score-=10
                     print("score: ",score)
-            elif arrow_throw == "d":
+            elif arrow_throw == "d" and row<3:
                 if wumpus[row+1][column] == "WUMPUS":
                     print("wumpus killed!")
                     score+=1000
@@ -77,7 +79,7 @@ while(player):
                     print("arrow wasted...")
                     score-=10
                     print("score: ",score)
-            elif arrow_throw == "l":
+            elif arrow_throw == "l" and column>0:
                 if wumpus[row][column-1] == "WUMPUS":
                     print("wumpus killed!")
                     score+=1000
@@ -89,7 +91,7 @@ while(player):
                     print("arrow wasted...")
                     score-=10
                     print("score: ",score)
-            elif arrow_throw == "r":
+            elif arrow_throw == "r" and column<3:
                 if wumpus[row][column+1] == "WUMPUS":
                     print("wumpus killed!")
                     score+=1000
@@ -110,7 +112,9 @@ while(player):
               ,"\n")
         break
     if(wumpus[row][column]=='GOLD'):
-        //TYPE THE CODE HERE( If the player reaches the tile with gold, they win and gain 1000 points. The game ends.)
+        score += 1000
+        print("Congratulations! You found the GOLD!\nYour score is: ", score)
+        break
     if(wumpus[row][column]=='PIT'):
         score-=1000
         print("Ahhhhh!!!!\nYou fell in pit.\nAnd your score is: ",score,"\n")
